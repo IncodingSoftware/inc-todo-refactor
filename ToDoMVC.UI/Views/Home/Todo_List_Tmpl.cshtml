@@ -84,24 +84,22 @@
                         {
                             @each.For(r => r.Title)
                         }                        
-                        @(Html.When(JqueryBind.Click)
-                              .Do()
-                              .AjaxPost(Url.Dispatcher().Push(new DeleteEntityByIdCommand
-                                                 {
-                                                         Id = each.For(r => r.Id),
-                                                         AssemblyQualifiedName = typeof(Todo).AssemblyQualifiedName
-                                                 }))
-                              .OnBegin(r =>
-                                           {
-                                               r.WithSelf(s => s.Closest(HtmlTag.Li)).Core().JQuery.Manipulation.Remove();
-                                               r.WithId(Model.FooterId).Core().Trigger.Incoding();
-                                               r.WithId(toggleAllId).Core().Trigger.None();
-                                           })
-                              .AsHtmlAttributes(new { @class = "destroy" })
-                              .ToButton(string.Empty))    
-                              
-                              
-                             
+                   
+                        @Html.Todo().Verb(setting =>
+                                              {
+                                                  setting.Url = Url.Dispatcher().Push(new DeleteEntityByIdCommand
+                                                                                          {
+                                                                                                  Id = each.For(r => r.Id),
+                                                                                                  AssemblyQualifiedName = typeof(Todo).AssemblyQualifiedName
+                                                                                          });
+                                                  setting.OnBegin = dsl =>
+                                                                        {
+                                                                            dsl.WithSelf(s => s.Closest(HtmlTag.Li)).Core().JQuery.Manipulation.Remove();
+                                                                            dsl.WithId(Model.FooterId).Core().Trigger.Incoding();
+                                                                            dsl.WithId(toggleAllId).Core().Trigger.None();
+                                                                        };
+                                                  setting.Attr = new { @class = "destroy" };
+                                              })                                                                                            
                     </div>
                     @(Html.When(JqueryBind.Blur)
                           .Do()

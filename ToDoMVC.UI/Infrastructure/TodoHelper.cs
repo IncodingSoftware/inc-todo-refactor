@@ -113,28 +113,39 @@
                          .ToLink(setting.Type.ToString());
         }
 
+        public class VerbSetting
+        {
+            public string Url { get; set; }
+
+            public Action<IIncodingMetaLanguageCallbackBodyDsl> OnBegin { get; set; }
+
+            public Action<IIncodingMetaLanguageCallbackBodyDsl> OnSuccess { get; set; }
+
+            public object Attr { get; set; }
+
+            public string Content { get; set; }
+        }
+
         public MvcHtmlString Verb(Action<VerbSetting> configure)
         {
             var setting = new VerbSetting();
             configure(setting);
 
-            helper.When(JqueryBind.Click)
-                      .Do()
-                      .AjaxPost(setting.Url)
-                      .OnSuccess(dsl => dsl.WithId(setting.DependencyId).Core().Trigger.Incoding())
-                      .AsHtmlAttributes(setting.Attr)
-                      .ToButton(setting.Content)
-        }
-
-        public class VerbSetting
-        {
-            public string Url { get; set; }
-
-            public string DependencyId { get; set; }
-
-            public object Attr { get; set; }
-
-            public string Content { get; set; }
+            return this.helper.When(JqueryBind.Click)
+                       .Do()
+                       .AjaxPost(setting.Url)
+                       .OnBegin(dsl =>
+                                    {
+                                        if (setting.OnBegin != null)
+                                            setting.OnBegin(dsl);
+                                    })
+                       .OnSuccess(dsl =>
+                                      {
+                                          if (setting.OnSuccess != null)
+                                              setting.OnSuccess(dsl);
+                                      })
+                       .AsHtmlAttributes(setting.Attr)
+                       .ToButton(setting.Content);
         }
     }
 }

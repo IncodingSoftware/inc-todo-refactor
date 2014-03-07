@@ -43,7 +43,7 @@
                                                                                   {
                                                                                           ClientId = Selector.Incoding.Cookie(CookieManager.ClientId)
                                                                                   });
-                                          setting.DependencyId = Model.ContainerId;
+                                          setting.OnSuccess = dsl => dsl.WithId(Model.ContainerId).Core().Trigger.Incoding();
                                           setting.Attr = new { id = "clear-completed", @class = each.NotInline(r => r.IsCompleted, "ng-hide") };
                                           setting.Content = "Clear completed (" + each.For(r => r.CompletedCount) + ")";
                                       })       
