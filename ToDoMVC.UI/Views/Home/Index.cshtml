@@ -2,6 +2,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model AddTodoCommand
+
 <body class="learn-bar">
     @Html.Partial("LearnPanel")
     <section id="todoapp" >
@@ -11,7 +12,10 @@
         }        
         
         <header id="header">
-            <h1>todos</h1>        
+            <h1>
+                todos
+                <a href="@Url.Dispatcher().AsView("~/Views/Test/Index.cshtml")">Test for Brent Jenkins</a>
+            </h1>        
             @using (Html.Todo().BeginForm<AddTodoCommand>(setting =>
                                          {
                                              setting.TargetId = containerId;

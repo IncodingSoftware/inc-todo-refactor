@@ -193,6 +193,7 @@
     <Content Include="Views\Home\LearnPanel.cshtml" />
     <Content Include="Views\Home\Todo_List_Tmpl.cshtml" />
     <Content Include="Views\Home\Todo_Footer_Tmpl.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
