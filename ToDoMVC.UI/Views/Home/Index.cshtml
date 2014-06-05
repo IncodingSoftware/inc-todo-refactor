@@ -14,7 +14,6 @@
         <header id="header">
             <h1>
                 todos
-                <a href="@Url.Dispatcher().AsView("~/Views/Test/Index.cshtml")">Test for Brent Jenkins</a>
             </h1>        
             @using (Html.Todo().BeginForm<AddTodoCommand>(setting =>
                                          {
